@@ -54,7 +54,9 @@
         <div id="iCon" class="blink">
             <p class="net noCon">No Network</p>
             <p class="net con">Connected to Network</p>
+           
         </div>
+        <div class="counter">Time:0</div>
         <br>
         <button class="getData">Get Data</button>
         <br>
@@ -67,6 +69,8 @@
     <script type="text/javascript" src="js/lodash.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript">
+      
+        
         Offline.options = {
             // to check the connection status immediatly on page load.
                 checkOnLoad: false,
@@ -79,10 +83,10 @@
                 // to automatically retest periodically when the connection is down (set to false to disable).
                 reconnect: {
                     // delay time in seconds to wait before rechecking.
-                    initialDelay: 3,
+                    initialDelay: 1,
 
                     // wait time in seconds between retries.
-                    delay: 10
+                    delay: 2
                 },
 
                 // to store and attempt to remake requests which failed while the connection was down.

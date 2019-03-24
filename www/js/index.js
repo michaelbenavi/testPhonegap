@@ -16,7 +16,12 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-var tout;
+var $timer = $('.counter'),
+    count = 0;
+var inter = 0;
+function counter(){
+    $timer.html("Time: " + count++);
+}
 var app = {
 
     // Application Constructor
@@ -37,17 +42,36 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+     
         app.receivedEvent('deviceready');
+
+    },
+   
+    // Update DOM on a Received Event
+    receivedEvent: function(id) {
+        var interval;
         $('.getData').click(function(){
-            $.get( "https://jsonplaceholder.typicode.com/todos", function( data ) {
+            inter = setInterval(function counter(){
+                $timer.html("Time: " + count++);
+            }, 1000);
+            //$.get("http://avuka-resttst.102.gov.il/AvukaRest_TEST/api/Main/GetCities/?search=6200", function( data ) {
+             $.get( "https://jsonplaceholder.typicode.com/todos", function( data ) {
+                count = 0;
+                for(i=0; i<10000; i++)
+                {
+                    window.clearInterval(i);
+                }
                 $.each(_.take(data, 10), function( index, value ){
                     $('.result').append('<p>' + value.title + '</p>')
                 });
+              }).fail(function(){
+                count = 0;
+                for(i=0; i<10000; i++)
+                {
+                    window.clearInterval(i);
+                }
               });
         });
-    },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
         Offline.on('confirmed-down', function() {
             $( ".result" ).text("");
             $('.getData').attr('disabled', 'disabled');
