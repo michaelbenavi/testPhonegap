@@ -6411,15 +6411,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             this.navigationService = navigationService;
             this.zone = zone;
             this.keepService = keepService;
-            this.keepService.start("https://jsonplaceholder.typicode.com/todos/1", 2000);
             this.keepService.networkCurrentStatus.subscribe(function (connected) {
-                if (connected && !_this.keepService.NetworkLastStatus) {
+                //if (connected && !this.keepService.NetworkLastStatus){
+                if (connected) {
+                    _this.keepService.stop();
                     connectionService.onChangeState(connection_state_types_1.ConnectionStateTypes.online);
-                    _this.keepService.NetworkLastStatus = true;
+                    //this.keepService.NetworkLastStatus = true;
                 }
                 else if (!connected && _this.keepService.NetworkLastStatus) {
-                    connectionService.onChangeState(connection_state_types_1.ConnectionStateTypes.offline);
-                    _this.keepService.NetworkLastStatus = false;
+                    //connectionService.onChangeState(ConnectionStateTypes.offline);
+                    //this.keepService.NetworkLastStatus = false;
                 }
             });
             this.device_info = config.getConfig('default_device_information');
@@ -6433,12 +6434,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             if (this.cordovaApp) {
                 document.addEventListener('online', function (e) {
                     _this.zone.run(function () {
+                        _this.keepService.start("https://jsonplaceholder.typicode.com/todos/1", 1000);
                         // this.keepService.runTimer();
                     });
                 }, false);
                 document.addEventListener('offline', function (e) {
                     _this.zone.run(function () {
-                        //connectionService.onChangeState(ConnectionStateTypes.offline);
+                        _this.keepService.updatedNetworkCurrentStatus(false);
+                        connectionService.onChangeState(connection_state_types_1.ConnectionStateTypes.offline);
                     });
                 }, false);
                 document.addEventListener('backbutton', function (e) {
@@ -6454,11 +6457,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             }
             else {
                 window.addEventListener('online', function (e) {
+                    _this.keepService.start("https://jsonplaceholder.typicode.com/todos/1", 1000);
                     //connectionService.onChangeState(ConnectionStateTypes.online);
                     // this.keepService.runTimer();
                 }, false);
                 window.addEventListener('offline', function (e) {
-                    // connectionService.onChangeState(ConnectionStateTypes.offline);
+                    connectionService.onChangeState(connection_state_types_1.ConnectionStateTypes.offline);
                 }, false);
                 window.addEventListener('backbutton', function (e) {
                     if (_this.navigationService.getRouter().url == _this.routes.EVENT_DETAILS) {
