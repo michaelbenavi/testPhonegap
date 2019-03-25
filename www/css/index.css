@@ -47,7 +47,7 @@ body {
 
 /* Portrait layout (default) */
 .app {
-    /*background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
+    background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
     position:absolute;             /* position in the center of the screen */
     left:50%;
     top:50%;
@@ -93,25 +93,6 @@ h1 {
 }
 
 .event.received {
-    background-color:#4B946A;
-    display:none;
-}
-
-.net {
-    border-radius:4px;
-    -webkit-border-radius:4px;
-    color:#FFFFFF;
-    font-size:12px;
-    margin:0px 30px;
-    padding:2px 0px;
-}
-
-.net.noCon {
-    background-color:red;
-    display:block;
-}
-
-.net.con {
     background-color:#4B946A;
     display:none;
 }

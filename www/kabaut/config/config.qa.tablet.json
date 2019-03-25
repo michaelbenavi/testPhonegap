@@ -1,0 +1,22 @@
+{
+    "node_host": "http://stldr069:8080/",
+    "node-fire-truck-event": "fireTruckNodeEvent",
+    "node-alertify-event": "fireTruckAlert",
+    "node_namespace": "EVENTS",
+    "chat_namespace": "CHAT",
+    "node_handshake_id": "uuId",
+    "base_web_api_schema": "http",
+    "base_web_api_domain": "stldr090",
+    "base_web_api_project": "Kabaut.QA.FireTruck.WebApi/api/",
+    "version": "1.7.0",
+    "default_device_information":{
+        "uuid":"1CB842761D7F7968",
+        "connection_state": 0
+    },
+    "bold_event_time": 30,
+    "event_added_sound": "sound/beep.wav",
+    "is_debug_mode": false,
+    "keep_alive_interval": 600000,     
+    "clear_logs_time_period": 60000,
+    "clear_logs_time": "10:50"
+}

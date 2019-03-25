@@ -1,0 +1,206 @@
+{
+    backgrounds: [{
+        caption: 'רחובות ומבנים',
+        urlTemplate: 'https://map.govmap.gov.il/280218N2G6G8/${0}/${1}/${2}.png',
+        dpi: 96,
+        extent: { xmin: -368691.7703835408, ymin: 332268.22453644907, xmax: 776691.7703835408, ymax: 857731.7754635509, spatialReference: { wkid: 2039 } },
+        id: 'streets_buildings',
+        layerType: 2,
+        imageFormat: 'png32',
+        minScale: 3000000,
+        maxScale: 0,
+        offline: false,
+        origin: { "x": -5403700, "y": 7116700, "spatialReference": { "wkid": 2039 } },
+        tileHeight: 256,
+        tileWidth: 256,
+        visible: true,
+        lodIndex: 0
+    },
+    {
+        caption: 'תצלום אוויר',
+        urlTemplate: 'http://map.govmap.gov.il/031017O1R2T3/${0}/${1}/${2}.jpg',
+        dpi: 96,
+        extent: { xmin: -368691.7703835408, ymin: 332268.22453644907, xmax: 776691.7703835408, ymax: 857731.7754635509, spatialReference: { wkid: 2039 } },
+        id: 'ortho',
+        layerType: 2,
+        imageFormat: 'jpg',
+        minScale: 3000000,
+        maxScale: 0,
+        offline: false,
+        origin: { "x": -5403700, "y": 7116700, "spatialReference": { "wkid": 2039 } },
+        tileHeight: 256,
+        tileWidth: 256,
+        visible: true,
+        lodIndex: 0
+    },
+    {
+        caption: 'מפה לא מקוונת',
+        urlTemplate: 'file://ortho_offline/${0}/${1}/${2}.jpg',
+        dpi: 96,
+        extent: { xmin: -368691.7703835408, ymin: 332268.22453644907, xmax: 776691.7703835408, ymax: 857731.7754635509, spatialReference: { wkid: 2039 } },
+        id: 'ortho_offline',
+        layerType: 2,
+        imageFormat: 'jpeg',
+        minScale: 3000000,
+        maxScale: 0,
+        offline: true,
+        origin: { "x": -5403700, "y": 7116700, "spatialReference": { "wkid": 2039 } },
+        tileHeight: 256,
+        tileWidth: 256,
+        visible: true,
+        lodIndex: 1
+    }],
+    backgroundToggle: ["streets_buildings", "ortho"],
+    lods: [[{
+        "level": 0,
+        "resolution": 793.751587503175,
+        "scale": 3000000
+    },
+    {
+        "level": 1,
+        "resolution": 264.583862501058,
+        "scale": 1000000
+    },
+    {
+        "level": 2,
+        "resolution": 132.291931250529,
+        "scale": 500000
+    },
+    {
+        "level": 3,
+        "resolution": 66.1459656252646,
+        "scale": 250000
+    },
+    {
+        "level": 4,
+        "resolution": 26.4583862501058,
+        "scale": 100000
+    },
+    {
+        "level": 5,
+        "resolution": 13.2291931250529,
+        "scale": 50000
+    },
+    {
+        "level": 6,
+        "resolution": 6.61459656252646,
+        "scale": 25000
+    },
+    {
+        "level": 7,
+        "resolution": 2.64583862501058,
+        "scale": 10000
+    },
+    {
+        "level": 8,
+        "resolution": 1.32291931250529,
+        "scale": 5000
+    },
+    {
+        "level": 9,
+        "resolution": 0.661459656252646,
+        "scale": 2500
+    },
+    {
+        "level": 10,
+        "resolution": 0.330729828126323,
+        "scale": 1250
+    }], [{
+        "level": 0,
+        "resolution": 793.751587503175,
+        "scale": 3000000
+    },
+    {
+        "level": 1,
+        "resolution": 264.583862501058,
+        "scale": 1000000
+    },
+    {
+        "level": 2,
+        "resolution": 132.291931250529,
+        "scale": 500000
+    },
+    {
+        "level": 3,
+        "resolution": 66.1459656252646,
+        "scale": 250000
+    }]],
+    options: {
+        autoResize: false,
+        displayGraphicsOnPan: true,
+        fadeOnZoom: true,
+        nav: false,
+        logo: false,
+        navigationMode: 'css-transforms',
+        force3DTransforms: true,
+        slider: false,
+        zoom: 0,
+        extent: { xmin: -368691.7703835408, ymin: 332268.22453644907, xmax: 776691.7703835408, ymax: 857731.7754635509, spatialReference: { wkid: 2039 } },
+        center: { "x": 204000, "y": 595000, "spatialReference": { "wkid": 2039 } }
+    },    
+    services: {
+        0: {
+            "additionaldata": {
+                opacity: 1,
+                imageFormat: "png32",
+                restUrl: "http://govmap/arcgis/rest/services/AdditionalData/MapServer"
+            }
+        }
+    },
+    proxy: {
+        proxyUrl: "https://ags.govmap.gov.il/proxy/proxy.ashx",
+        urlPrefix: "",
+        useProxy: true
+    }
+};
+
+//------------------------------------------------------------------------------------------------------------------
+
+layers: [{
+    caption: "תחנות אוטובוס",
+    layerName: "BUS_STOPS",
+    layerType: 'LayerType.AGS_DYNAMIC',
+    minScale: 25001,
+    maxScale: 0,
+    visible: true,
+    resource: "additionaldata"
+},
+{
+    caption: "אנטנות סלולאריות",
+    layerName: "CELL_ACTIVE",
+    layerType: 'LayerType.AGS_DYNAMIC',
+    minScale: 26001,
+    maxScale: 0,
+    visible: true,
+    resource: "additionaldata"
+},
+{
+    caption: "כבאיות",
+    layerName: "CARS",
+    layerType: 'LayerType.GRAPHIC',
+    visible: true,
+    symbol: {
+        "angle": 0,
+        "xoffset": 0,
+        "yoffset": 0,
+        "type": "esriPMS",
+        "url": "images/layer_symbols/fire_truck.png",
+        "width": 32,
+        "height": 32
+    }
+},
+{
+    caption: "ניידות משטרה",
+    layerName: "POLICE_OPEN_EVENTS",
+    layerType: 'LayerType.GRAPHIC',
+    visible: true,
+    symbol: {
+        "angle": 0,
+        "xoffset": 0,
+        "yoffset": 0,
+        "type": "esriPMS",
+        "url": "images/layer_symbols/police_car.png",
+        "width": 32,
+        "height": 32
+    }
+}]
