@@ -6411,13 +6411,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             this.navigationService = navigationService;
             this.zone = zone;
             this.keepService = keepService;
-            this.keepService.start("https://jsonplaceholder.typicode.com/todos/1", 1000);
-            this.keepService.timer.subscribe(function (connected) {
-                if (connected) {
+            this.keepService.start("https://jsonplaceholder.typicode.com/todos/1", 2000);
+            this.keepService.networkCurrentStatus.subscribe(function (connected) {
+                if (connected && !_this.keepService.NetworkLastStatus) {
                     connectionService.onChangeState(connection_state_types_1.ConnectionStateTypes.online);
+                    _this.keepService.NetworkLastStatus = true;
                 }
-                else {
+                else if (!connected && _this.keepService.NetworkLastStatus) {
                     connectionService.onChangeState(connection_state_types_1.ConnectionStateTypes.offline);
+                    _this.keepService.NetworkLastStatus = false;
                 }
             });
             this.device_info = config.getConfig('default_device_information');
@@ -6636,26 +6638,43 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             this.httpService = httpService;
             this.alertifyService = alertifyService;
             this.logService = logService;
-            this._timer = new rxjs_2.BehaviorSubject(false);
-            this.timer = this._timer.asObservable();
+            this._networkCurrentStatus = new rxjs_2.BehaviorSubject(false);
+            this.networkCurrentStatus = this._networkCurrentStatus.asObservable();
+            this._networkLastStatus = false;
+            //new BehaviorSubject<boolean>(false);
+            //networkLastStatus = this._networkLastStatus.asObservable();
             this.numbers = rxjs_1.Observable.interval(1000);
         }
         KeepAliveMonitorService.prototype.start = function (url, tick) {
             var _this = this;
             this.keepAliveTimer = rxjs_1.Observable.interval(tick).subscribe(function (tick) {
                 _this.httpService.get(url).subscribe(function (datd) {
-                    _this.updatedAlive(true);
+                    _this.updatedNetworkCurrentStatus(true);
                 }, (function (err) {
-                    _this.updatedAlive(false);
+                    _this.updatedNetworkCurrentStatus(false);
                 }));
             });
         };
         KeepAliveMonitorService.prototype.stop = function () {
             this.keepAliveTimer.unsubscribe();
         };
-        KeepAliveMonitorService.prototype.updatedAlive = function (alive) {
-            this._timer.next(alive);
+        KeepAliveMonitorService.prototype.updatedNetworkCurrentStatus = function (alive) {
+            this._networkCurrentStatus.next(alive);
         };
+        KeepAliveMonitorService.prototype.updatedNetworkLastStatus = function (alive) {
+            //this._networkLastStatus.next(alive);
+            this._networkLastStatus = alive;
+        };
+        Object.defineProperty(KeepAliveMonitorService.prototype, "NetworkLastStatus", {
+            get: function () {
+                return this._networkLastStatus;
+            },
+            set: function (status) {
+                this._networkLastStatus = status;
+            },
+            enumerable: true,
+            configurable: true
+        });
         return KeepAliveMonitorService;
     }());
     KeepAliveMonitorService = __decorate([
