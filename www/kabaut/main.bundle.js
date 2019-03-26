@@ -6412,15 +6412,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             this.zone = zone;
             this.keepService = keepService;
             this.keepService.networkCurrentStatus.subscribe(function (connected) {
-                //if (connected && !this.keepService.NetworkLastStatus){
                 if (connected) {
                     _this.keepService.stop();
                     connectionService.onChangeState(connection_state_types_1.ConnectionStateTypes.online);
-                    //this.keepService.NetworkLastStatus = true;
-                }
-                else if (!connected && _this.keepService.NetworkLastStatus) {
-                    //connectionService.onChangeState(ConnectionStateTypes.offline);
-                    //this.keepService.NetworkLastStatus = false;
                 }
             });
             this.device_info = config.getConfig('default_device_information');
@@ -6435,7 +6429,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
                 document.addEventListener('online', function (e) {
                     _this.zone.run(function () {
                         _this.keepService.start("https://jsonplaceholder.typicode.com/todos/1", 1000);
-                        // this.keepService.runTimer();
                     });
                 }, false);
                 document.addEventListener('offline', function (e) {
@@ -6458,10 +6451,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             else {
                 window.addEventListener('online', function (e) {
                     _this.keepService.start("https://jsonplaceholder.typicode.com/todos/1", 1000);
-                    //connectionService.onChangeState(ConnectionStateTypes.online);
-                    // this.keepService.runTimer();
                 }, false);
                 window.addEventListener('offline', function (e) {
+                    _this.keepService.updatedNetworkCurrentStatus(false);
                     connectionService.onChangeState(connection_state_types_1.ConnectionStateTypes.offline);
                 }, false);
                 window.addEventListener('backbutton', function (e) {
@@ -6634,27 +6626,25 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;var __decorate =
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__("./node_modules/@angular/core/@angular/core.es5.js"), __webpack_require__("./src/app/core/http.service.ts"), __webpack_require__("./src/app/services/general/alertify.service.ts"), __webpack_require__("./node_modules/rxjs/Rx.js"), __webpack_require__("./src/app/services/general/log.service.ts"), __webpack_require__("./node_modules/rxjs/Rx.js")], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, core_1, http_service_1, alertify_service_1, rxjs_1, log_service_1, rxjs_2) {
+!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__, exports, __webpack_require__("./node_modules/@angular/core/@angular/core.es5.js"), __webpack_require__("./src/app/core/http.service.ts"), __webpack_require__("./node_modules/rxjs/Rx.js"), __webpack_require__("./src/app/services/general/log.service.ts"), __webpack_require__("./src/app/shared-classes/common/log-info.ts"), __webpack_require__("./src/app/shared-classes/common/log-types.ts"), __webpack_require__("./node_modules/rxjs/Rx.js")], __WEBPACK_AMD_DEFINE_RESULT__ = function (require, exports, core_1, http_service_1, rxjs_1, log_service_1, log_info_1, log_types_1, rxjs_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var KeepAliveMonitorService = (function () {
-        function KeepAliveMonitorService(httpService, alertifyService, logService) {
+        function KeepAliveMonitorService(httpService, logService) {
             this.httpService = httpService;
-            this.alertifyService = alertifyService;
             this.logService = logService;
             this._networkCurrentStatus = new rxjs_2.BehaviorSubject(false);
             this.networkCurrentStatus = this._networkCurrentStatus.asObservable();
             this._networkLastStatus = false;
-            //new BehaviorSubject<boolean>(false);
-            //networkLastStatus = this._networkLastStatus.asObservable();
-            this.numbers = rxjs_1.Observable.interval(1000);
         }
         KeepAliveMonitorService.prototype.start = function (url, tick) {
             var _this = this;
             this.keepAliveTimer = rxjs_1.Observable.interval(tick).subscribe(function (tick) {
                 _this.httpService.get(url).subscribe(function (datd) {
+                    _this.logService.addItem(new log_info_1.LogInfo('KEEP ALIVE', url, 'keep alive success', log_types_1.LogTypes.info));
                     _this.updatedNetworkCurrentStatus(true);
                 }, (function (err) {
+                    _this.logService.addItem(new log_info_1.LogInfo('KEEP ALIVE', url, 'keep alive fail', log_types_1.LogTypes.error));
                     _this.updatedNetworkCurrentStatus(false);
                 }));
             });
@@ -6666,7 +6656,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
             this._networkCurrentStatus.next(alive);
         };
         KeepAliveMonitorService.prototype.updatedNetworkLastStatus = function (alive) {
-            //this._networkLastStatus.next(alive);
             this._networkLastStatus = alive;
         };
         Object.defineProperty(KeepAliveMonitorService.prototype, "NetworkLastStatus", {
@@ -6683,10 +6672,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     }());
     KeepAliveMonitorService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [typeof (_a = typeof http_service_1.HttpService !== "undefined" && http_service_1.HttpService) === "function" && _a || Object, typeof (_b = typeof alertify_service_1.AlertifyService !== "undefined" && alertify_service_1.AlertifyService) === "function" && _b || Object, typeof (_c = typeof log_service_1.LogService !== "undefined" && log_service_1.LogService) === "function" && _c || Object])
+        __metadata("design:paramtypes", [typeof (_a = typeof http_service_1.HttpService !== "undefined" && http_service_1.HttpService) === "function" && _a || Object, typeof (_b = typeof log_service_1.LogService !== "undefined" && log_service_1.LogService) === "function" && _b || Object])
     ], KeepAliveMonitorService);
     exports.KeepAliveMonitorService = KeepAliveMonitorService;
-    var _a, _b, _c;
+    var _a, _b;
 }.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
 				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 //# sourceMappingURL=keep-alive.service.js.map
