@@ -1,66 +1,15 @@
 <!doctype html>
-<html dir="rtl" lang="he">
-
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Esri</title>
-  <base href=".">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Avukatest</title>
+  <base href="/">
 
-  <script type="text/javascript" src="./additional-files/browser.js"></script>
-  <script type="text/javascript" src="inline.bundle.js"></script>
-  <script type="text/javascript" src="vendor.bundle.js"></script>
-
-  <script>
-    window.dojoConfig = {
-      async: true,
-      baseUrl: "../esri-js-api/dojo"
-    };    
-  </script>
-</head>
-
-<body style="background-color: #474e5d;">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="stylesheet" href="styles.3ff695c00d717f2d2a11.css"></head>
+<body>
   <app-root></app-root>
-</body>
-
-<script>
-    /////adding esri javascript api local scripts/////
-    var fileref = document.createElement('script');
-    fileref.setAttribute("type", "text/javascript");
-    fileref.setAttribute("src", "../esri-js-api/init.js");
-
-    if (typeof fileref != "undefined")
-      document.getElementsByTagName("head")[0].appendChild(fileref);
-
-    var link = document.createElement('link');
-    link.setAttribute("rel", "stylesheet");
-    link.setAttribute("href", "../esri-js-api/esri/css/esri.css");
-  
-  if (document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1) {
-    /////////////adding cordova scripts//////////////
-    var fileref = document.createElement('script');
-    fileref.setAttribute("type", "text/javascript");
-    fileref.setAttribute("src", "../cordova.js");
-
-    if (typeof fileref != "undefined")
-      document.getElementsByTagName("head")[0].appendChild(fileref);
-   /////////////////////////////////////////////////
-   //alert('before device ready');
-    document.addEventListener('deviceready', function () { 
-      require(["polyfills.bundle.js", "styles.bundle.js", "main.bundle.js", "dojo/domReady!"],
-        function (polyfills, styles, main) {
-          //alert('inside device ready');
-        });
-    }, false);
- 
-  }
-  else {
-    window.addEventListener('load', function () {
-      require(["polyfills.bundle.js", "styles.bundle.js", "main.bundle.js", "dojo/domReady!"],
-        function (polyfills, styles, main) {
-        });
-    }, false);
-  }
-</script>
-
+  <script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="runtime.26209474bfa8dc87a77c.js"></script><script type="text/javascript" src="es2015-polyfills.c5dd28b362270c767b34.js" nomodule></script><script type="text/javascript" src="polyfills.8bbb231b43165d65d357.js"></script><script type="text/javascript" src="main.af11bc32685e48b49204.js"></script></body>
 </html>
